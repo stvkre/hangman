@@ -18,7 +18,7 @@ public class Hangman {
     String hangMan = myConsole.readLine();
     System.out.println("Let's do this! " + hangMan + "!" + "You are Player 1");
     System.out.println("------------------");
-    System.out.println("Here is how our gane works, You can only guess one letter at a time. if you guess whether right or wrong the computer automatically moves to the next letter up until the spaces are used up. How you win is by correctly guessing the words according to the spaces given. Good Luck");
+    System.out.println("Here is how our game works, You can only guess one letter at a time. if you guess whether right or wrong the computer automatically moves to the next letter up until the spaces are used up. How you win is by correctly guessing the words according to the spaces given. Good Luck");
     System.out.println("---------------------");
 
     // saving user input
@@ -40,6 +40,20 @@ public class Hangman {
     printArray(PlayerGuess);
     System.out.printf("You have %d tries left.\n", numberOfGuesses - tries);
     System.out.println("Enter a single letter");
+    char input = Scanner.nextLine().charAt(0);
+    tries++;
+
+// replacing underscore with correct letter guessed
+    if (input == '-') {
+      GameInProgress = false;
+      wordIsGuessed = true;
+    } else {
+      for (int i = 0; i < WordToGuess.length; i++) {
+        if (WordToGuess[i] == input){
+          PlayerGuess[i] = input;
+        }
+      }
+    }
 
   }
 
