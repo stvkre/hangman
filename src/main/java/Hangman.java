@@ -4,6 +4,7 @@ import java.util.Random;
 
 public class Hangman {
   public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
     Random random = new Random();
     String[] guesses = { "constipate", "oblitirate", "athletism", "propaganda", "sequel", "quantum" };
 
@@ -25,38 +26,53 @@ public class Hangman {
     char[] anyWordGuessed = guesses[random.nextInt(guesses.length)].toCharArray();
     int numberOfGuesses = anyWordGuessed.length;
 
+// displays word to be guessed with underscores
+
     char[] PlayerGuess = new char[numberOfGuesses];
 
-// replacing word to be guessed by the player with an underscore sign
+
     for (int i = 0; i < PlayerGuess.length; i++) {
       PlayerGuess[i] = '_';
     }
 
-    boolean wordIsGuessed = false;
+    boolean WordIsGuessed = false;
     int tries = 0;
 
-  while (!wordIsGuessed && tries != numberOfGuesses) {
-    System.out.println("Current guesses: ");
+  while (!WordIsGuessed && tries != numberOfGuesses) {
+    System.out.print("Current guesses: ");
     printArray(PlayerGuess);
     System.out.printf("You have %d tries left.\n", numberOfGuesses - tries);
     System.out.println("Enter a single letter");
-    char input = Scanner.nextLine().charAt(0);
+
+    char input = scanner.nextLine().charAt(0);
     tries++;
 
 // replacing underscore with correct letter guessed
+
+
     if (input == '-') {
       GameInProgress = false;
-      wordIsGuessed = true;
+      WordIsGuessed = true;
     } else {
-      for (int i = 0; i < WordToGuess.length; i++) {
-        if (WordToGuess[i] == input){
+      for (int i = 0; i < anyWordGuessed.length; i++) {
+        if (anyWordGuessed[i] == input) {
           PlayerGuess[i] = input;
         }
       }
+
+      if (isTheWordGuessed(PlayerGuess)) {
+        WordIsGuessed = true;
+        System.out.println("You won!");
+      }
     }
+
 
   }
 
+      if (!WordIsGuessed) System.out.println("You ran out of guesses :/");
+      System.out.println("Do you wish to continue? (yes/no)");
+      String anotherGame = scanner.nextLine();
+      if (anotherGame.equals("no")) GameInProgress = false;
 }
     System.out.println("Game Over");
   }
@@ -67,5 +83,13 @@ public class Hangman {
     for (int i = 0; i < array.length; i++) {
       System.out.print(array[i] + " ");
     }
+    System.out.println();
+  }
+
+  public static boolean isTheWordGuessed(char[] array) {
+    for (int i = 0; i < array.length; i++) {
+      if (array[i] == '_') return false;
+    }
+    return true;
   }
 }
